@@ -1,0 +1,12 @@
+applications:
+- path: .
+  memory: 128M
+  instances: 1
+  domain: mybluemix.net
+  name: stevemar-nlc-demo
+  host: stevemar-nlc-demo
+  disk_quota: 1024M
+  services:
+  - availability-monitoring-auto
+  - Natural Language Classifier-yh
+  buildpack: python_buildpack
