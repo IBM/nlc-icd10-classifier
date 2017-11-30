@@ -1,1 +1,2 @@
-Flask==0.10.1
+Flask
+watson_developer_cloud

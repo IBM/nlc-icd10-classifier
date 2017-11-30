@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Python Flask Starter Application</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="static/stylesheets/style.css">
+  </head>
+
+  <body>
+    <table>
+      <tr>
+        <td>
+          <h1>NLC Demo</h1>
+        </td>
+      </tr>
+      <tr>
+          <td>
+            <p>NLC info dump: </p>
+            <textarea rows="8" cols="110"> {{ classifier_info }} </textarea>
+            <br>
+          </td>
+        </tr>  
+      <tr>
+        <td>
+          <form action="/classifyhandler" method="post"> Text to classify: <input type="text" name="classifierinput"> <input type="submit" value="Submit"> </form>
+        </td>
+      </tr>
+      <tr>
+          <td>
+            <p> Output from classifier: </p>
+            <textarea rows="17" cols="110"> {{ classifier_output }} </textarea>
+            <br>
+          </td>
+        </tr>
+    </table>
+  </body>
+
+</html>
