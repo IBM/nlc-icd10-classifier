@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import json
+import os
 
 from flask import Flask, jsonify, render_template, request
 from watson_developer_cloud import NaturalLanguageClassifierV1
