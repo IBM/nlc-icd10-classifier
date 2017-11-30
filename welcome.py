@@ -13,15 +13,15 @@
 # limitations under the License.
 
 import json
-import os
 
 from flask import Flask, jsonify, render_template, request
 from watson_developer_cloud import NaturalLanguageClassifierV1
 
 app = Flask(__name__)
 
-NLC_USERNAME = os.getenv("VCAP_SERVICES")['natural_language_classifier'][0]['credentials']['username']
-NLC_PASSWORD = os.getenv("VCAP_SERVICES")['natural_language_classifier'][0]['credentials']['password']
+# Update the values here
+NLC_USERNAME = ""
+NLC_PASSWORD = ""
 
 NLC_SERVICE = NaturalLanguageClassifierV1(
     username=NLC_USERNAME,
