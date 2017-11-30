@@ -1,5 +1,3 @@
-# Copyright 2015 IBM Corp. All Rights Reserved.
-#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -13,15 +11,21 @@
 # limitations under the License.
 
 import json
+import os
 
 from flask import Flask, jsonify, render_template, request
 from watson_developer_cloud import NaturalLanguageClassifierV1
 
 app = Flask(__name__)
 
-# Update the values here
-NLC_USERNAME = ""
-NLC_PASSWORD = ""
+if 'VCAP_SERVICES' in os.environ:
+    VCAP_SERVICES = json.loads(os.getenv('VCAP_SERVICES'))
+    NLC_USERNAME = VCAP_SERVICES['natural_language_classifier'][0]['credentials']['username']
+    NLC_PASSWORD = VCAP_SERVICES['natural_language_classifier'][0]['credentials']['username']
+else:
+    # Set these here for local development
+    NLC_USERNAME = ""
+    NLC_PASSWORD = ""
 
 NLC_SERVICE = NaturalLanguageClassifierV1(
     username=NLC_USERNAME,
@@ -33,7 +37,6 @@ CLASSIFIER = None
 def Welcome():
     global CLASSIFIER
     CLASSIFIER = _create_classifier()
-    #return app.send_static_file('index.html')
     classifier_info = json.dumps(CLASSIFIER, indent=4)
     return render_template('index.html', classifier_info=classifier_info, classifier_output="")
 

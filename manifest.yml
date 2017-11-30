@@ -8,5 +8,5 @@ applications:
   disk_quota: 1024M
   services:
   - availability-monitoring-auto
-  - Natural Language Classifier-yh
+  - Natural Language Classifier-x8
   buildpack: python_buildpack
