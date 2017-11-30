@@ -34,7 +34,6 @@ CLASSIFIER = None
 def Welcome():
     global CLASSIFIER
     CLASSIFIER = _create_classifier()
-    #return app.send_static_file('index.html')
     classifier_info = json.dumps(CLASSIFIER, indent=4)
     return render_template('index.html', classifier_info=classifier_info, classifier_output="")
 
