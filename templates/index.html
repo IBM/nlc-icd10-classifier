@@ -30,7 +30,21 @@
       </tr>
       <tr>
           <td>
-            <p> Output from classifier: </p>
+            <p> ICD10 code: </p>
+            <textarea rows="2" cols="10"> {{ code}} </textarea>
+            <br>
+          </td>
+        </tr>
+      <tr>
+          <td>
+            <p> Output from ICD10 api: </p>
+            <textarea rows="8" cols="110"> {{ ret_text }} </textarea>
+            <br>
+          </td>
+        </tr>
+      <tr>
+          <td>
+            <p> Output from Watson NLC classifier: </p>
             <textarea rows="17" cols="110"> {{ classifier_output }} </textarea>
             <br>
           </td>

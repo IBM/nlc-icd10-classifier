@@ -12,6 +12,7 @@
 
 import json
 import os
+import requests
 
 from flask import Flask, jsonify, render_template, request
 from watson_developer_cloud import NaturalLanguageClassifierV1
@@ -24,8 +25,8 @@ if 'VCAP_SERVICES' in os.environ:
     NLC_PASSWORD = VCAP_SERVICES['natural_language_classifier'][0]['credentials']['username']
 else:
     # Set these here for local development
-    NLC_USERNAME = ""
-    NLC_PASSWORD = ""
+    NLC_USERNAME = "fe430574-8a84-42c4-9748-bbd03c5368de"
+    NLC_PASSWORD = "741DcPDcweIJ"
 
 NLC_SERVICE = NaturalLanguageClassifierV1(
     username=NLC_USERNAME,
@@ -47,8 +48,11 @@ def classify_text():
     inputtext = request.form['classifierinput']
     classifier_output = NLC_SERVICE.classify(CLASSIFIER['classifier_id'], inputtext)
     classifier_info = json.dumps(CLASSIFIER, indent=4)
+    code, ret_text = _get_ICD_code_info(classifier_output)
+    ret_text = json.dumps(ret_text, indent=4)
     classifier_output = json.dumps(classifier_output, indent=4)
-    return render_template('index.html', classifier_info=classifier_info, classifier_output=classifier_output)
+    #return render_template('index.html', classifier_info=classifier_info, classifier_output=classifier_output)
+    return render_template('index.html', classifier_info=classifier_info, code=code, ret_text=ret_text, classifier_output=classifier_output)
 
 
 def _create_classifier():
@@ -65,6 +69,12 @@ def _create_classifier():
             )
         return classifier
 
+def _get_ICD_code_info(result):
+    base_url = "http://www.icd10api.com/?"
+    code = result["top_class"]
+    query_string = "s=" + code + "&desc=short&r=json"
+    r = requests.get(base_url + query_string)
+    return code, r.text
 
 port = os.getenv('PORT', '5000')
 if __name__ == "__main__":
