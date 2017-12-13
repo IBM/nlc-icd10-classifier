@@ -57,8 +57,8 @@ def _create_classifier():
         # for the purposes of this demo, we handle only one classifier
         return result['classifiers'][0]
     else:
-        with open('weather_data_train.csv', 'rb') as training_data:
-            metadata = '{"name": "My Classifier", "language": "en"}'
+        with open('data/ICD-10-GT-AA.csv', 'rb') as training_data:
+            metadata = '{"name": "ICD_classifier", "language": "en"}'
             classifier = NLC_SERVICE.create_classifier(
                 metadata=metadata,
                 training_data=training_data
