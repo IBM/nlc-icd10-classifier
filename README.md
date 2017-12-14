@@ -13,7 +13,10 @@ Below is a video where we walkthrough NLC's tutorial. A new video will be posted
 ## Run locally
 
 1. [Install Python](https://www.python.org/downloads)
+1. clone this project: `git clone git@github.com:stevemart/nlc-demo.git`
 1. cd into this project's root directory
+1. (Optionally) create a virtual environment: `virtualenv my-nlc-demo`
+    1. Activate the virtual environment: `./my-nlc-demo/bin/activate`
 1. Run `pip install -r requirements.txt` to install the app's dependencies
 1. Run `python welcome.py`
 1. Access the running app in a browser at <http://localhost:5000>
