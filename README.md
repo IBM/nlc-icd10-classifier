@@ -10,10 +10,18 @@ Below is a video where we walkthrough NLC's tutorial. A new video will be posted
 
 [![](http://img.youtube.com/vi/X4k_ZB2rDsU/0.jpg)](https://youtu.be/X4k_ZB2rDsU)
 
-## Run locally
+## Walkthrough
 
-1. [Install Python](https://www.python.org/downloads)
-1. clone this project: `git clone git@github.com:stevemart/nlc-icd10-demo.git`
+### Setup classifier
+
+1. Download the [ICD-10 dataset](https://raw.githubusercontent.com/stevemart/nlc-icd10-demo/master/data/ICD-10-GT-AA.csv) by right clicking the link and seletcting _Save As_.
+1. Create an [NLC service in IBM Cloud](https://console.bluemix.net/catalog/services/natural-language-classifier).
+1. Create service credentials by using the menu on the left.
+1. Upload the file using `curl -i --user "$username":"$password" -F training_data=@ICD-10-GT-AA.csv -F training_metadata="{\"language\":\"en\",\"name\":\"ICD-10Classifier\"}" "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers"`, substitude the username and password, get back the classifier ID.
+
+### Run locally
+
+1. Clone this project: `git clone git@github.com:stevemart/nlc-icd10-demo.git`
 1. cd into this project's root directory
 1. (Optionally) create a virtual environment: `virtualenv my-nlc-demo`
     1. Activate the virtual environment: `./my-nlc-demo/bin/activate`
