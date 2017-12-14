@@ -18,6 +18,7 @@ Below is a video where we walkthrough NLC's tutorial. A new video will be posted
 1. (Optionally) create a virtual environment: `virtualenv my-nlc-demo`
     1. Activate the virtual environment: `./my-nlc-demo/bin/activate`
 1. Run `pip install -r requirements.txt` to install the app's dependencies
+1. Update the [welcome.py](welcome.py) with the correct NLC credentials
 1. Run `python welcome.py`
 1. Access the running app in a browser at <http://localhost:5000>
 
