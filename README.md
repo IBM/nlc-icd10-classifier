@@ -4,15 +4,7 @@ This application was built to demonstrate IBM's Watson Natural Language Classifi
 
 This application is a Python web application based on the [Flask microframework](http://flask.pocoo.org/), and based on earlier work done by [Ryan Anderson](https://github.com/rustyoldrake/IBM_Watson_NLC_ICD10_Health_Codes). It uses the [Watson Python SDK](https://github.com/watson-developer-cloud/python-sdk) to create the classifier, list classifiers, and classify the input text. We also make use of the freely available [ICD-10 API](http://icd10api.com/) which, given an ICD-10 code, returns a name and description.
 
-## Watch the Video
-
-Below is a video where we walkthrough NLC's tutorial. A new video will be posted soon where we walkthrough this application.
-
-[![](http://img.youtube.com/vi/X4k_ZB2rDsU/0.jpg)](https://youtu.be/X4k_ZB2rDsU)
-
-## Walkthrough
-
-### Setup the classifier
+## Setup the classifier
 
 Here we create the classifier with our ICD-10 dataset.
 
@@ -22,7 +14,7 @@ Here we create the classifier with our ICD-10 dataset.
 1. Upload the file using `curl -i --user "$username":"$password" -F training_data=@ICD-10-GT-AA.csv -F training_metadata="{\"language\":\"en\",\"name\":\"ICD-10Classifier\"}" "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers"`, substitude the username and password. This will take around 3 hours.
 1. Make a note of the service name used in the catalog.
 
-### Run the application
+## Run the application
 
 Whether running the app locally or on IBM Cloud perform the first few steps:
 
@@ -32,13 +24,13 @@ Whether running the app locally or on IBM Cloud perform the first few steps:
     1. Activate the virtual environment: `./my-nlc-demo/bin/activate`
 1. Run `pip install -r requirements.txt` to install the app's dependencies
 
-#### Run the application locally
+### Run the application locally
 
 1. Update the [welcome.py](welcome.py) with the correct NLC credentials
 1. Run `python welcome.py`
 1. Access the running app in a browser at `http://localhost:5000`
 
-#### Run the application on IBM Cloud
+### Run the application on IBM Cloud
 
 1. Update `manifest.yml` with the service name from the previous section (Create classifier, step 2)
 1. Update `manifest.yml` with a unique name and host value, for instance `username-nlc-demo`
@@ -55,6 +47,7 @@ Whether running the app locally or on IBM Cloud perform the first few steps:
 * [Ryan Anderson's Original Work](https://github.com/rustyoldrake/IBM_Watson_NLC_ICD10_Health_Codes)
 * [ICD-10 API](http://icd10api.com)
 * [ICD-10 on Wikipedia](https://en.wikipedia.org/wiki/ICD-10)
+* [Intro to NLC Tutorial](https://www.youtube.com/watch?v=X4k_ZB2rDsU)
 
 # License
 
