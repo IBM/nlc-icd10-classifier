@@ -19,10 +19,15 @@ from watson_developer_cloud import NaturalLanguageClassifierV1
 
 app = Flask(__name__)
 
-if 'VCAP_SERVICES' in os.environ:
-    VCAP_SERVICES = json.loads(os.getenv('VCAP_SERVICES'))
-    NLC_USERNAME = VCAP_SERVICES['natural_language_classifier'][0]['credentials']['username']
-    NLC_PASSWORD = VCAP_SERVICES['natural_language_classifier'][0]['credentials']['username']
+# The data set we want to use
+DATA_SET = 'data/ICD-10-GT-AA.csv'
+
+VCAP_SERVICES = os.getenv("VCAP_SERVICES")
+if VCAP_SERVICES is not None:
+    # These will be automatically set if deployed to IBM Cloud
+    SERVICES = json.loads(VCAP_SERVICES)
+    NLC_USERNAME = SERVICES['natural_language_classifier'][0]['credentials']['username']
+    NLC_PASSWORD = SERVICES['natural_language_classifier'][0]['credentials']['username']
 else:
     # Set these here for local development
     NLC_USERNAME = ""
@@ -33,7 +38,6 @@ NLC_SERVICE = NaturalLanguageClassifierV1(
     password=NLC_PASSWORD
 )
 CLASSIFIER = None
-DATA_SET = 'data/ICD-10-GT-AA.csv'
 
 @app.route('/')
 def Welcome():
