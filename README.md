@@ -12,31 +12,45 @@ Below is a video where we walkthrough NLC's tutorial. A new video will be posted
 
 ## Walkthrough
 
-### Setup classifier
+### Setup the classifier
+
+Here we create the classifier with our ICD-10 dataset.
 
 1. Download the [ICD-10 dataset](https://raw.githubusercontent.com/stevemart/nlc-icd10-demo/master/data/ICD-10-GT-AA.csv) by right clicking the link and seletcting _Save As_.
 1. Create an [NLC service in IBM Cloud](https://console.bluemix.net/catalog/services/natural-language-classifier).
 1. Create service credentials by using the menu on the left.
-1. Upload the file using `curl -i --user "$username":"$password" -F training_data=@ICD-10-GT-AA.csv -F training_metadata="{\"language\":\"en\",\"name\":\"ICD-10Classifier\"}" "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers"`, substitude the username and password, get back the classifier ID.
+1. Upload the file using `curl -i --user "$username":"$password" -F training_data=@ICD-10-GT-AA.csv -F training_metadata="{\"language\":\"en\",\"name\":\"ICD-10Classifier\"}" "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers"`, substitude the username and password. This will take around 3 hours.
+1. Make a note of the service name used in the catalog.
 
-### Run locally
+### Run the application
+
+Whether running the app locally or on IBM Cloud perform the first few steps:
 
 1. Clone this project: `git clone git@github.com:stevemart/nlc-icd10-demo.git`
 1. cd into this project's root directory
 1. (Optionally) create a virtual environment: `virtualenv my-nlc-demo`
     1. Activate the virtual environment: `./my-nlc-demo/bin/activate`
 1. Run `pip install -r requirements.txt` to install the app's dependencies
+
+#### Run the application locally
+
 1. Update the [welcome.py](welcome.py) with the correct NLC credentials
 1. Run `python welcome.py`
-1. Access the running app in a browser at <http://localhost:5000>
+1. Access the running app in a browser at `http://localhost:5000`
 
-## Run on IBM Cloud
+#### Run the application on IBM Cloud
 
-> To be completed
+1. Update `manifest.yml` with the service name from the previous section (Create classifier, step 2)
+1. Update `manifest.yml` with a unique name and host value, for instance `username-nlc-demo`
+1. Run `bluemix app push` from the root directory
+1. Access the running app by going to: `https://username-nlc-demo.mybluemix.net/`
+
+> If you've never run the `bluemix` command before, there is some configuration required, refer to the official [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html) docs to get this set up.
 
 # Links
 * [Watson NLC API](https://www.ibm.com/watson/developercloud/natural-language-classifier/api/v1/)
 * [Watson Python SDK](https://github.com/watson-developer-cloud/python-sdk)
+* [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html)
 * [Watson Natural Language Classifier](https://www.ibm.com/watson/services/natural-language-classifier/)
 * [Ryan Anderson's Original Work](https://github.com/rustyoldrake/IBM_Watson_NLC_ICD10_Health_Codes)
 * [ICD-10 API](http://icd10api.com)
