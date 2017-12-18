@@ -11,7 +11,7 @@ Here we create the classifier with our ICD-10 dataset.
 1. Download the [ICD-10 dataset](https://raw.githubusercontent.com/stevemart/nlc-icd10-demo/master/data/ICD-10-GT-AA.csv) by right clicking the link and seletcting _Save As_.
 1. Create an [NLC service in IBM Cloud](https://console.bluemix.net/catalog/services/natural-language-classifier), make a note of the service name used in the catalog.
 1. Create service credentials by using the menu on the left and selecting the default options.
-1. Upload the file using, be sure to substitute the username and password. This will take around 3 hours.:
+1. Upload the file using, be sure to substitute the username and password. This will take around 3 hours.
 
 ```bash
 curl -i --user "$username":"$password" -F training_data=@ICD-10-GT-AA.csv -F training_metadata="{\"language\":\"en\",\"name\":\"ICD-10Classifier\"}" "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers"
