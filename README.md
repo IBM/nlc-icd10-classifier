@@ -6,6 +6,10 @@ This application is a Python web application based on the [Flask microframework]
 
 > NOTE: This application is for **demonstation and illustrative purposes only**, it is not intended to serve as a medical application. There is no representation as to the accuracy of the output of this application and it is presented without warranty.
 
+## Architecture
+
+![](images/architecture.png)
+
 ## Setup the classifier
 
 Here we create the classifier with our ICD-10 dataset.
