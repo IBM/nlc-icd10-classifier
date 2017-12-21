@@ -4,6 +4,8 @@ This application was built to demonstrate IBM's Watson Natural Language Classifi
 
 This application is a Python web application based on the [Flask microframework](http://flask.pocoo.org/), and based on earlier work done by [Ryan Anderson](https://github.com/rustyoldrake/IBM_Watson_NLC_ICD10_Health_Codes). It uses the [Watson Python SDK](https://github.com/watson-developer-cloud/python-sdk) to create the classifier, list classifiers, and classify the input text. We also make use of the freely available [ICD-10 API](http://icd10api.com/) which, given an ICD-10 code, returns a name and description.
 
+> NOTE: This application is for **demonstation and illustrative purposes only**, it is not intended to serve as a medical application. There is no representation as to the accuracy of the output of this application and it is presented without warranty.
+
 ## Setup the classifier
 
 Here we create the classifier with our ICD-10 dataset.
