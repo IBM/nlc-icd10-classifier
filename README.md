@@ -57,7 +57,7 @@ This application can be run locally or hosted on IBM Cloud, follow the steps bel
 * [Ryan Anderson's Original Work](https://github.com/rustyoldrake/IBM_Watson_NLC_ICD10_Health_Codes)
 * [ICD-10 API](http://icd10api.com)
 * [ICD-10 on Wikipedia](https://en.wikipedia.org/wiki/ICD-10)
-* [Intro to NLC Tutorial](https://www.youtube.com/watch?v=X4k_ZB2rDsU)
+* [Intro to NLC Tutorial](https://www.youtube.com/watch?v=SUj826ybCdU)
 
 # License
 
