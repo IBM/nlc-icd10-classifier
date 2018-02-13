@@ -55,6 +55,28 @@ This application can be run locally or hosted on IBM Cloud, follow the steps bel
 
 > If you've never run the `bluemix` command before there is some configuration required, refer to the official [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html) docs to get this set up.
 
+# Privacy Notice
+If using the `Deploy to IBM Cloud` button some metrics are tracked, the following
+information is sent to a [Deployment Tracker](https://github.com/IBM/cf-deployment-tracker-service) service
+on each deployment:
+
+* Node.js package version
+* Node.js repository URL
+* Application Name (`application_name`)
+* Application GUID (`application_id`)
+* Application instance index number (`instance_index`)
+* Space ID (`space_id`)
+* Application Version (`application_version`)
+* Application URIs (`application_uris`)
+* Labels of bound services
+* Number of instances for each bound service and associated plan information
+
+This data is collected from the `package.json` file in the sample application and the `VCAP_APPLICATION` and `VCAP_SERVICES` environment variables in IBM Cloud and other Cloud Foundry platforms. This data is used by IBM to track metrics around deployments of sample applications to IBM Cloud to measure the usefulness of our examples, so that we can continuously improve the content we offer to you. Only deployments of sample applications that include code to ping the Deployment Tracker service will be tracked.
+
+## Disabling Deployment Tracking
+
+To disable tracking, simply remove ``import metrics_tracker_client`` and ``metrics_tracker_client.track()`` from the ``welcome.py`` file in the top level directory. You can also remove ``metrics-tracker-client>=1.0.9`` from ``requirements.txt``
+
 # Links
 * [Watson NLC API](https://www.ibm.com/watson/developercloud/natural-language-classifier/api/v1/)
 * [Watson Python SDK](https://github.com/watson-developer-cloud/python-sdk)

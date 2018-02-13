@@ -12,10 +12,13 @@
 
 import json
 import os
+import metrics_tracker_client
 import requests
 
 from flask import Flask, jsonify, render_template, request
 from watson_developer_cloud import NaturalLanguageClassifierV1
+
+metrics_tracker_client.track()
 
 app = Flask(__name__)
 
