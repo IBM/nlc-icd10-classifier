@@ -1,11 +1,16 @@
+---
+declared-services:
+  ICD10-NLC-service:
+    label: natural_language_classifier
+    plan: standard
 applications:
-- path: .
+- name: ICD10-nlc-demo
+  path: .
   memory: 256M
   instances: 1
   domain: mybluemix.net
-  name: stevemar-nlc-demo
-  host: stevemar-nlc-demo
   disk_quota: 1024M
+  command: python welcome.py
+  random-route: true
   services:
-  - Natural Language Classifier-mg
-  buildpack: python_buildpack
+  - ICD-10Classifier
