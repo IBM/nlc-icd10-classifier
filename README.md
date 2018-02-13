@@ -27,6 +27,12 @@ curl -i --user "$username":"$password" -F training_data=@ICD-10-GT-AA.csv -F tra
 
 This application can be run locally or hosted on IBM Cloud, follow the steps below depending on your deployment choice
 
+### Run in the IBM Cloud
+
+* Press the `Deploy to IBM Cloud` button and then click `Deploy`.
+
+[![Deploy to IBM Cloud](https://metrics-tracker.mybluemix.net/stats/8ef3c79f843535f3cff63dba2b4d7ac5/button.svg)](https://bluemix.net/deploy?repository=https://github.com/scottdangelo/nlc-demo)
+
 ### Run the application locally
 
 1. Clone this project: `git clone git@github.com:stevemart/nlc-icd10-demo.git`
