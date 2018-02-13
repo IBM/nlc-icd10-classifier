@@ -1,3 +1,2 @@
 Flask
 watson_developer_cloud
-metrics-tracker-client>=1.0.9
