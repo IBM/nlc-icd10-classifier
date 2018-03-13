@@ -29,7 +29,7 @@ This application can be run locally or hosted on IBM Cloud, follow the steps bel
 
 ### Run locally
 
-1. Clone this project: `git clone git@github.com:stevemart/nlc-icd10-demo.git`
+1. Clone this project: `git clone git@github.com:IBM/nlc-icd10-demo.git`
 1. `cd` into this project's root directory
 1. (Optionally) create a virtual environment: `virtualenv my-nlc-demo`
     1. Activate the virtual environment: `./my-nlc-demo/bin/activate`
@@ -42,10 +42,24 @@ This application can be run locally or hosted on IBM Cloud, follow the steps bel
 
 1. Clone this project: `git clone git@github.com:stevemart/nlc-icd10-demo.git`
 1. `cd` into this project's root directory
-1. Update `manifest.yml` with the service name from the previous section (Create classifier, step 2)
-1. Update `manifest.yml` with a unique name and host value, for instance `username-nlc-demo`
+1. Update [`manifest.yml`](manifest.yml) with the NLC service name, a unique name and host value
+
+    ```
+    applications:
+      - path: .
+      memory: 256M
+      instances: 1
+      domain: mybluemix.net
+      name: your_app_name
+      host: your_app_host
+      disk_quota: 1024M
+      services:
+      - your_nlc_service_name
+      buildpack: python_buildpack
+    ```
+
 1. Run `bluemix app push` from the root directory
-1. Access the running app by going to: `https://username-nlc-demo.mybluemix.net/`
+1. Access the running app by going to: `https://<host-value>.mybluemix.net/`
 
 > If you've never run the `bluemix` command before there is some configuration required, refer to the official [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html) docs to get this set up.
 
