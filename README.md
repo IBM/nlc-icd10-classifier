@@ -40,7 +40,7 @@ This application can be run locally or hosted on IBM Cloud, follow the steps bel
 
 ### Run on IBM Cloud
 
-1. Clone this project: `git clone git@github.com:stevemart/nlc-icd10-demo.git`
+1. Clone this project: `git clone git@github.com:IBM/nlc-icd10-demo.git`
 1. `cd` into this project's root directory
 1. Update [`manifest.yml`](manifest.yml) with the NLC service name (`your_nlc_service_name`), a unique application name (`your_app_name`) and unique host value (`your_app_host`)
 
