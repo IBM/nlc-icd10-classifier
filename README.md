@@ -32,7 +32,7 @@ This application can be run locally or hosted on IBM Cloud, follow the steps bel
 1. Clone this project: `git clone git@github.com:IBM/nlc-icd10-demo.git`
 1. `cd` into this project's root directory
 1. (Optionally) create a virtual environment: `virtualenv my-nlc-demo`
-    1. Activate the virtual environment: `./my-nlc-demo/bin/activate`
+    1. Activate the virtual environment: `. my-nlc-demo/bin/activate`
 1. Run `pip install -r requirements.txt` to install the app's dependencies
 1. Update the [welcome.py](welcome.py) with your NLC credentials
 1. Run `python welcome.py`
