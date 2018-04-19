@@ -3,9 +3,9 @@ applications:
   memory: 256M
   instances: 1
   domain: mybluemix.net
-  name: stevemar-nlc-demo
-  host: stevemar-nlc-demo
+  name: <my_app_name>
+  host: <my_host_name>
   disk_quota: 1024M
-  services:
-  - Natural Language Classifier-mg
   buildpack: python_buildpack
+  services:
+  - <my_NLC_service>
