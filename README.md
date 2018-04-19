@@ -56,8 +56,10 @@ export FILE=data/ICD-10-GT-AA.csv
 
 curl -i --user "$USERNAME":"$PASSWORD" -F training_data=@$FILE -F training_metadata="{\"language\":\"en\",\"name\":\"ICD-10Classifier\"}" "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers"
 ```
+
 1. After running the command to create the classifier, note the `classifier_id` in the json that is returned:
-```
+
+```JSON
 {
   "classifier_id" : "ab2aa6x341-nlc-1176",
   "name" : "ICD-10Classifier",
@@ -65,16 +67,20 @@ curl -i --user "$USERNAME":"$PASSWORD" -F training_data=@$FILE -F training_metad
   "created" : "2018-04-18T14:09:28.403Z",
   "url" : "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers/ab2aa6x341-nlc-1176",
   "status" : "Training",
-  "status_description" : "The classifier instance is in its training phase, not yet ready to accept classify requests"}
+  "status_description" : "The classifier instance is in its training phase, not yet ready to accept classify requests"
+}
 ```
+
 and export that as an environment variable:
-```
+
+```bash
 export CLASSIFIER_ID=<my_classifier_id>
 ```
-```
+
 Now you can check the status for training your classifier:
-```
-  curl --user "$USERNAME":"$PASSWORD" "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers/$CLASSIFIER_ID"
+
+```bash
+curl --user "$USERNAME":"$PASSWORD" "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers/$CLASSIFIER_ID"
 ```
 
 ## Steps
@@ -91,13 +97,15 @@ This application can be run locally or hosted on IBM Cloud, follow the steps bel
 1. Copy the `env.example` file to `.env`
 
 1. Update the `.env` file  with your NLC credentials:
-```
+
+```bash
 # Replace the credentials here with your own.
 # Rename this file to .env before running run.py.
 
 NATURAL_LANGUAGE_CLASSIFIER_USERNAME=<add_NLU_username>
 NATURAL_LANGUAGE_CLASSIFIER_PASSWORD=<add_NLU_password>
 ```
+
 1. Run `python welcome.py`
 1. Access the running app in a browser at `http://localhost:5000`
 
@@ -107,19 +115,20 @@ NATURAL_LANGUAGE_CLASSIFIER_PASSWORD=<add_NLU_password>
 1. `cd` into this project's root directory
 1. Update [`manifest.yml`](manifest.yml) with the NLC service name (`your_nlc_service_name`), a unique application name (`your_app_name`) and unique host value (`your_app_host`)
 
-    ```
-    applications:
-      - path: .
-      memory: 256M
-      instances: 1
-      domain: mybluemix.net
-      name: your_app_name
-      host: your_app_host
-      disk_quota: 1024M
-      services:
-      - your_nlc_service_name
-      buildpack: python_buildpack
-    ```
+
+```yaml
+applications:
+  - path: .
+  memory: 256M
+  instances: 1
+  domain: mybluemix.net
+  name: your_app_name
+  host: your_app_host
+  disk_quota: 1024M
+  services:
+  - your_nlc_service_name
+  buildpack: python_buildpack
+```
 
 1. Run `bluemix app push` from the root directory
 1. Access the running app by going to: `https://<host-value>.mybluemix.net/`
