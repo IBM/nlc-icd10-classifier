@@ -41,41 +41,52 @@ When the reader has completed this pattern, they will understand how to:
 Here we create the classifier with our ICD-10 dataset.
 
 1. Clone this project: `git clone git@github.com:IBM/nlc-icd10-classifier.git`
-1. Change directories to the ICD-10 datasets. We'll be using 'ICD-10-GT-AA.csv``
-    `cd data/`
-   >Note that this is a subset of the entire ICD-10 classification set, which allows faster training time
+
+1. We'll be using the file `ICD-10-GT-AA.csv` in the `data` folder.
+   > Note that this is a subset of the entire ICD-10 classification set, which allows faster training time
+
 1. Create an [NLC service in IBM Cloud](https://console.bluemix.net/catalog/services/natural-language-classifier), make a note of the service name used in the catalog, we'll need this later.
+
 1. Create service credentials by using the menu on the left and selecting the default options.
-![](https://github.com/IBM/pattern-images/blob/master/natural-language-classifier/NLCcredentials.png)
+
+   ![](https://github.com/IBM/pattern-images/blob/master/natural-language-classifier/NLCcredentials.png)
+
 1. Export the username and password as environment variables and then load the data using the command below. This will take around 3 hours.
 
-```bash
-export USERNAME=<username_from_credentials>
-export PASSWORD=<pasword_from_credentials>
-export FILE=data/ICD-10-GT-AA.csv
+    ```bash
+    export USERNAME=<username_from_credentials>
+    export PASSWORD=<pasword_from_credentials>
+    export FILE=data/ICD-10-GT-AA.csv
 
-curl -i --user "$USERNAME":"$PASSWORD" -F training_data=@$FILE -F training_metadata="{\"language\":\"en\",\"name\":\"ICD-10Classifier\"}" "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers"
-```
+    curl -i --user "$USERNAME":"$PASSWORD" -F training_data=@$FILE -F training_metadata="{\"language\":\"en\",\"name\":\"ICD-10Classifier\"}" "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers"
+    ```
+
 1. After running the command to create the classifier, note the `classifier_id` in the json that is returned:
-```
-{
-  "classifier_id" : "ab2aa6x341-nlc-1176",
-  "name" : "ICD-10Classifier",
-  "language" : "en",
-  "created" : "2018-04-18T14:09:28.403Z",
-  "url" : "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers/ab2aa6x341-nlc-1176",
-  "status" : "Training",
-  "status_description" : "The classifier instance is in its training phase, not yet ready to accept classify requests"}
-```
-and export that as an environment variable:
-```
-export CLASSIFIER_ID=<my_classifier_id>
-```
-```
-Now you can check the status for training your classifier:
-```
-  curl --user "$USERNAME":"$PASSWORD" "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers/$CLASSIFIER_ID"
-```
+
+    ```json
+    {
+      "classifier_id" : "ab2aa6x341-nlc-1176",
+      "name" : "ICD-10Classifier",
+      "language" : "en",
+      "created" : "2018-04-18T14:09:28.403Z",
+      "url" : "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers/ab2aa6x341-nlc-1176",
+      "status" : "Training",
+      "status_description" : "The classifier instance is in its training phase, not yet ready to accept classify requests"
+    }
+    ```
+
+    and export that as an environment variable:
+
+    ```bash
+    export CLASSIFIER_ID=<my_classifier_id>
+
+    ```
+
+    Now you can check the status for training your classifier:
+
+    ```bash
+    curl --user "$USERNAME":"$PASSWORD" "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers/$CLASSIFIER_ID"
+    ```
 
 ## Steps
 
@@ -84,30 +95,39 @@ This application can be run locally or hosted on IBM Cloud, follow the steps bel
 ### Run locally
 
 1. Clone this project: `git clone git@github.com:IBM/nlc-icd10-classifier.git`
+
 1. `cd` into this project's root directory
+
 1. (Optionally) create a virtual environment: `virtualenv my-nlc-classifier`
     1. Activate the virtual environment: `. my-nlc-classifier/bin/activate`
+
 1. Run `pip install -r requirements.txt` to install the app's dependencies
+
 1. Copy the `env.example` file to `.env`
 
 1. Update the `.env` file  with your NLC credentials:
-```
-# Replace the credentials here with your own.
-# Rename this file to .env before running run.py.
 
-NATURAL_LANGUAGE_CLASSIFIER_USERNAME=<add_NLU_username>
-NATURAL_LANGUAGE_CLASSIFIER_PASSWORD=<add_NLU_password>
-```
+    ```bash
+    # Replace the credentials here with your own.
+    # Rename this file to .env before running run.py.
+
+    NATURAL_LANGUAGE_CLASSIFIER_USERNAME=<add_NLU_username>
+    NATURAL_LANGUAGE_CLASSIFIER_PASSWORD=<add_NLU_password>
+    ```
+
 1. Run `python welcome.py`
+
 1. Access the running app in a browser at `http://localhost:5000`
 
 ### Run on IBM Cloud
 
 1. Clone this project: `git clone git@github.com:IBM/nlc-icd10-classifier.git`
+
 1. `cd` into this project's root directory
+
 1. Update [`manifest.yml`](manifest.yml) with the NLC service name (`your_nlc_service_name`), a unique application name (`your_app_name`) and unique host value (`your_app_host`)
 
-    ```
+    ```yaml
     applications:
       - path: .
       memory: 256M
@@ -122,9 +142,10 @@ NATURAL_LANGUAGE_CLASSIFIER_PASSWORD=<add_NLU_password>
     ```
 
 1. Run `bluemix app push` from the root directory
+
 1. Access the running app by going to: `https://<host-value>.mybluemix.net/`
 
-> If you've never run the `bluemix` command before there is some configuration required, refer to the official [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html) docs to get this set up.
+    > If you've never run the `bluemix` command before there is some configuration required, refer to the official [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html) docs to get this set up.
 
 # Sample Output
 
