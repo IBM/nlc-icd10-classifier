@@ -11,7 +11,7 @@ When the reader has completed this pattern, they will understand how to:
 * Create a Natural Language Classifier (NLC) service and use it in a Python application.
 * Train a NLC model using csv data.
 * Deploy a web app with Flask to allow the NLC model to be queried.
-* Quickly get a classification of a discease or health issue using the Natural Language Classifier trained model.
+* Quickly get a classification of a disease or health issue using the Natural Language Classifier trained model.
 
 ## Flow
 
