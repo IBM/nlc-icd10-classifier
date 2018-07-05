@@ -109,8 +109,8 @@ This application can be run locally or hosted on IBM Cloud, follow the steps bel
     # Replace the credentials here with your own.
     # Rename this file to .env before running run.py.
 
-    NATURAL_LANGUAGE_CLASSIFIER_USERNAME=<add_NLU_username>
-    NATURAL_LANGUAGE_CLASSIFIER_PASSWORD=<add_NLU_password>
+    NATURAL_LANGUAGE_CLASSIFIER_USERNAME=<add_NLC_username>
+    NATURAL_LANGUAGE_CLASSIFIER_PASSWORD=<add_NLC_password>
     ```
 
 1. Run `python welcome.py`
