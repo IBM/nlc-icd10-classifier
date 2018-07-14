@@ -28,7 +28,7 @@ When the reader has completed this pattern, they will understand how to:
 
 ## Included Components
 
-* [Watson Natural Language Classifier](https://www.ibm.com/watson/services/natural-language-classifier/)An IBM Cloud service to interpret and classify natural language with confidence.
+* [Watson Natural Language Classifier](https://www.ibm.com/watson/services/natural-language-classifier/): An IBM Cloud service to interpret and classify natural language with confidence.
 
 ## Featured Technologies
 
