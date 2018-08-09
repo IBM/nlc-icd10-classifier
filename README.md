@@ -49,7 +49,17 @@ Here we create the classifier with our ICD-10 dataset.
 1. We'll be using `ICD-10-GT-AA.csv` dataset in the `data` folder
     > Note that this is a subset of the entire ICD-10 classification set, which allows faster training time
 
-1. Create an [NLC service in IBM Cloud](https://console.bluemix.net/catalog/services/natural-language-classifier), make a note of the service name used in the catalog, we'll need this later.
+1. Create an [NLC service in IBM Cloud](https://console.bluemix.net/catalog/services/natural-language-classifier), make a note of the service name used in the catalog, we'll need this later. If you are using [Watson Studio](https://dataplatform.cloud.ibm.com/), Create a new Project, go to the `Settings` tab and under `Associated Services` click `+ Add Servce` -> `Watson` and then click `Add` for the `Natural Language Classifier` tile:
+
+![](https://github.com/IBM/pattern-images/blob/master/watson-studio/add_service.png)
+
+> Note: The NLC service only offers a `Standard` plan, which allows:
+```
+1 Natural Language Classifier free per month.
+1000 API calls free per month
+4 Training Events free per month
+```
+After that, you will incur a charge.
 
 1. Create service credentials by using the menu on the left and selecting the default options.
     ![](https://github.com/IBM/pattern-images/blob/master/natural-language-classifier/NLCcredentials.png)
