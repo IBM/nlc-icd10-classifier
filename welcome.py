@@ -58,7 +58,7 @@ def classify_text():
     classifier_info = json.dumps(CLASSIFIER, indent=4)
     # send the text to the classifier, get back an ICD code
     classifier_output = NLC_SERVICE.classify(
-        CLASSIFIER['classifier_id'], inputtext)
+        CLASSIFIER['classifier_id'], inputtext).get_result()
     # get the ICD name based on ICD code
     icd_code, icd_output = _get_ICD_code_info(classifier_output)
     # format results
@@ -75,7 +75,7 @@ def classify_text():
 
 def _create_classifier():
     # fetch all classifiers associated with the NLC instance
-    result = NLC_SERVICE.list_classifiers()
+    result = NLC_SERVICE.list_classifiers().get_result()
     # for the purposes of this demo, we handle only one classifier
     # return the first one found
     if len(result['classifiers']) > 0:
@@ -87,7 +87,7 @@ def _create_classifier():
             classifier = NLC_SERVICE.create_classifier(
                 metadata=metadata,
                 training_data=training_data
-            )
+            ).get_result()
         return classifier
 
 
