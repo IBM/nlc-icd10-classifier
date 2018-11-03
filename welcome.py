@@ -27,11 +27,21 @@ load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 
 nlc_username = os.environ.get("NATURAL_LANGUAGE_CLASSIFIER_USERNAME")
 nlc_password = os.environ.get("NATURAL_LANGUAGE_CLASSIFIER_PASSWORD")
+nlc_iam_apikey = os.environ.get("NATURAL_LANGUAGE_CLASSIFIER_IAM_APIKEY")
 
-NLC_SERVICE = NaturalLanguageClassifierV1(
-    username=nlc_username,
-    password=nlc_password
-)
+# Use provided credentials from environment or pull from IBM Cloud VCAP
+if nlc_iam_apikey:
+    NLC_SERVICE = NaturalLanguageClassifierV1(
+      iam_apikey=nlc_iam_apikey
+    )
+elif nlc_username:
+    NLC_SERVICE = NaturalLanguageClassifierV1(
+      username=nlc_username,
+      password=nlc_password
+    )
+else:
+    NLC_SERVICE = NaturalLanguageClassifierV1()
+
 CLASSIFIER = None
 
 
