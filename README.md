@@ -49,22 +49,23 @@ Here we create the classifier with our ICD-10 dataset.
 1. We'll be using `ICD-10-GT-AA.csv` dataset in the `data` folder
     > Note that this is a subset of the entire ICD-10 classification set, which allows faster training time
 
-1. Create an [NLC service in IBM Cloud](https://console.bluemix.net/catalog/services/natural-language-classifier), make a note of the service name used in the catalog, we'll need this later. If you are using [Watson Studio](https://dataplatform.cloud.ibm.com/), Create a new Project, go to the `Settings` tab and under `Associated Services` click `+ Add Servce` -> `Watson` and then click `Add` for the `Natural Language Classifier` tile:
+1. Go to the IBM Cloud dashboard and Create a Natural Language Classifier service instance by selecting **Catalog** and then typing in "Natural Language Classifier" in the search panel.  Select the tile and create the service using the `Standard` plan, make a note of the service name used in the catalog, we'll need this later.
 
-![](https://github.com/IBM/pattern-images/blob/master/watson-studio/add_service.png)
+    > Note: The NLC service only offers a `Standard` plan, which allows:
+    ```
+    1 Natural Language Classifier free per month.
+    1000 API calls free per month
+    4 Training Events free per month
+    ```
+    After that, there are charges for the use of the service when using a paid account.
 
-> Note: The NLC service only offers a `Standard` plan, which allows:
-```
-1 Natural Language Classifier free per month.
-1000 API calls free per month
-4 Training Events free per month
-```
-After that, you will incur a charge.
+1. When the instance is created you will see a screen where you can copy the service credentials. Copy the API key for later use.
 
-1. Create service credentials by using the menu on the left and selecting the default options.
-    ![](https://github.com/IBM/pattern-images/blob/master/natural-language-classifier/NLCcredentials.png)
+    > NLC service instances created after 10/30/18 will have an API key, instances from before this date will provide userid / password credentials.
 
-1. Export the username and password as environment variables and then load the data using the command below. This will take around 3 hours.
+    ![](doc/source/images/NLC-service.png)
+
+1. Export the username and password as environment variables and then load the data using the command below. If you have an API key, use `apikey` for the username and the API key for the password. This will take around 4.5 hours.
 
     ```bash
     export USERNAME=<username_from_credentials>
@@ -117,14 +118,17 @@ This application can be run locally or hosted on IBM Cloud, follow the steps bel
 
 1. Copy the `env.example` file to `.env`
 
-1. Update the `.env` file  with your NLC credentials:
+1. Update the `.env` file  with the NLC credentials for either username/password or API key
 
     ```bash
-    # Replace the credentials here with your own.
-    # Rename this file to .env before running run.py.
+    # Replace the credentials here with your own using either USERNAME/PASSWORD or IAM_APIKEY
+    # Comment out the unset environment variables
+    # Rename this file to .env before running welcome.py.
 
     NATURAL_LANGUAGE_CLASSIFIER_USERNAME=<add_NLC_username>
     NATURAL_LANGUAGE_CLASSIFIER_PASSWORD=<add_NLC_password>
+
+    NATURAL_LANGUAGE_CLASSIFIER_IAM_APIKEY=<add_NLC_iam_apikey>
     ```
 
 1. Run `python welcome.py`
@@ -154,7 +158,14 @@ This application can be run locally or hosted on IBM Cloud, follow the steps bel
       buildpack: python_buildpack
     ```
 
-1. Run `bluemix app push` from the root directory
+1. After logging in to the IBM Cloud CLI, if you have a Natural Language Classifier as a resource group service (it will have an API key for the credential), create a Cloud Foundry service alias. Otherwise, skip to the next step.
+
+    ```bash
+    ibmcloud target --cf
+    ibmcloud resource service-alias-create your_nlc_service_name --instance-name your_nlc_service_name
+    ```
+
+1. Deploy the application as a Cloud Foundry runtime with `ibmcloud app push` from the root directory
 
 1. Access the running app by going to: `https://<host-value>.mybluemix.net/`
 
