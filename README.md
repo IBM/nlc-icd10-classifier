@@ -169,7 +169,7 @@ This application can be run locally or hosted on IBM Cloud, follow the steps bel
 
 1. Access the running app by going to: `https://<host-value>.mybluemix.net/`
 
-    > If you've never run the `bluemix` command before there is some configuration required, refer to the official [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html) docs to get this set up.
+    > If you've never run the `bluemix` command before there is some configuration required, refer to the official [IBM Cloud CLI](https://cloud.ibm.com/docs/cli/reference/bluemix_cli/get_started.html) docs to get this set up.
 
 # Sample Output
 
@@ -181,7 +181,7 @@ Here is the output for the input `Gastrointestinal hemorrhage`:
 # Links
 * [Watson NLC API](https://www.ibm.com/watson/developercloud/natural-language-classifier/api/v1/)
 * [Watson Python SDK](https://github.com/watson-developer-cloud/python-sdk)
-* [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html)
+* [IBM Cloud CLI](https://cloud.ibm.com/docs/cli/reference/bluemix_cli/get_started.html)
 * [Watson Natural Language Classifier](https://www.ibm.com/watson/services/natural-language-classifier/)
 * [Ryan Anderson's Original Work](https://github.com/rustyoldrake/IBM_Watson_NLC_ICD10_Health_Codes)
 * [ICD-10 API](http://icd10api.com)
