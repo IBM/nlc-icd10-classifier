@@ -107,31 +107,65 @@ This application can be run locally or hosted on IBM Cloud, follow the steps bel
 
 ### Run locally
 
-1. Clone this project: `git clone git@github.com:IBM/nlc-icd10-classifier.git`
+1. Clone this project:
 
-1. `cd` into this project's root directory
+```bash
+git clone git@github.com:IBM/nlc-icd10-classifier.git
+```
 
-1. (Optionally) create a virtual environment: `virtualenv my-nlc-classifier`
-    1. Activate the virtual environment: `. my-nlc-classifier/bin/activate`
+1. The general recommendation for Python development is to use a virtual environment [(venv)](https://docs.python.org/3/tutorial/venv.html). To install and initialize a virtual environment, use the `venv` module on Python 3 (you install the virtualenv library for Python 2.7):
 
-1. Run `pip install -r requirements.txt` to install the app's dependencies
+```bash
+# Create the virtual environment using Python. Use one of the two commands depending on your Python version.
+# Note, it may be named python3 on your system.
 
-1. Copy the `env.example` file to `.env`
+$ python -m venv mytestenv       # Python 3.X
+$ virtualenv mytestenv           # Python 2.X
 
-1. Update the `.env` file  with the NLC credentials for either username/password or API key
+# Now source the virtual environment. Use one of the two commands depending on your OS.
 
-    ```bash
-    # Replace the credentials here with your own using either USERNAME/PASSWORD or IAM_APIKEY
-    # Comment out the unset environment variables
-    # Rename this file to .env before running welcome.py.
+$ source mytestenv/bin/activate  # Mac or Linux
+$ ./mytestenv/Scripts/activate   # Windows PowerShell
+```
 
-    NATURAL_LANGUAGE_CLASSIFIER_USERNAME=<add_NLC_username>
-    NATURAL_LANGUAGE_CLASSIFIER_PASSWORD=<add_NLC_password>
+1. Go to the cloned repo directory:
 
-    NATURAL_LANGUAGE_CLASSIFIER_IAM_APIKEY=<add_NLC_iam_apikey>
-    ```
+```bash
+cd nlc-icd10-classifier
+```
 
-1. Run `python welcome.py`
+1. Install the Python requirements for this code pattern. Run:
+
+```bash
+pip install -r requirements.txt
+```
+
+> **TIP** :bulb: To terminate the virtual environment use the `deactivate` command.
+
+1. Rename the `env.example` file to `.env`
+
+```bash
+mv env.example .env
+```
+
+1. Update the `.env` fixle  with the NLC credentials for either username/password or API key
+
+```bash
+# Replace the credentials here with your own using either USERNAME/PASSWORD or IAM_APIKEY
+# Comment out the unset environment variables
+# Rename this file to .env before running welcome.py.
+
+NATURAL_LANGUAGE_CLASSIFIER_USERNAME=<add_NLC_username>
+NATURAL_LANGUAGE_CLASSIFIER_PASSWORD=<add_NLC_password>
+
+NATURAL_LANGUAGE_CLASSIFIER_IAM_APIKEY=<add_NLC_iam_apikey>
+```
+
+1. Run the app
+
+```bash
+python welcome.py
+```
 
 1. Access the running app in a browser at `http://localhost:5000`
 
