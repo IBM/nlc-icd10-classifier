@@ -56,7 +56,7 @@ ICD-10 は、[疾病及び関連保健問題の国際統計分類](https://ja.wi
 2. `data` フォルダにある `ICD-10-GT-AA.csv` データセットを使用します
     > トレーニング時間を短くおさえるため、ICD-1010分類セット全体のサブセットを使用していることに注意してください。
 
-3. [IBM Cloud の NLC サービス](https://console.bluemix.net/catalog/services/natural-language-classifier) を作成し、サービス名をメモしておきます。これは後で必要になります。
+3. [IBM Cloud の NLC サービス](https://cloud.ibm.com/catalog/services/natural-language-classifier) を作成し、サービス名をメモしておきます。これは後で必要になります。
 
 4. 左の 'Service credentials' メニューからデフォルトのオプションを選択して、サービスの資格情報を作成します。
     ![](https://github.com/IBM/pattern-images/blob/master/natural-language-classifier/NLCcredentials.png)
@@ -156,7 +156,7 @@ ICD-10 は、[疾病及び関連保健問題の国際統計分類](https://ja.wi
 
 4. ルートディレクトリで `bluemix app push` を実行します。
 
-> 初めて `bluemix` コマンドを実行する場合には、幾つかの事前設定が必要です。公式の [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html) ドキュメントを参照してセットアップを実施してください。
+> 初めて `bluemix` コマンドを実行する場合には、幾つかの事前設定が必要です。公式の [IBM Cloud CLI](https://cloud.ibm.com/docs/cli/reference/bluemix_cli/get_started.html) ドキュメントを参照してセットアップを実施してください。
 
 5. 実行中のアプリケーションに Web ブラウザでアクセスします: `https://<host-value>.mybluemix.net/`
 
@@ -170,7 +170,7 @@ ICD-10 は、[疾病及び関連保健問題の国際統計分類](https://ja.wi
 # リンク
 * [Watson NLC API](https://www.ibm.com/watson/developercloud/natural-language-classifier/api/v1/)
 * [Watson Python SDK](https://github.com/watson-developer-cloud/python-sdk)
-* [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html)
+* [IBM Cloud CLI](https://cloud.ibm.com/docs/cli/reference/bluemix_cli/get_started.html)
 * [Watson Natural Language Classifier](https://www.ibm.com/watson/jp-ja/developercloud/nl-classifier.html)
 * [Ryan Anderson's Original Work](https://github.com/rustyoldrake/IBM_Watson_NLC_ICD10_Health_Codes)
 * [ICD-10 API](http://icd10api.com)
