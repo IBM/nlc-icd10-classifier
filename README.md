@@ -47,9 +47,9 @@ When the reader has completed this pattern, they will understand how to:
 
 Either [Run locally](#3-run-locally) or [Deploy on IBM Cloud](#4-deploy-on-ibm-cloud)
 
-3. [Run locally](#3-run-locally)
-   3a. [Create the classifier](#3a-create-the-classifier)
-   3b. [Run the application](#3b-run-the-application)
+3. [Run locally](#3-run-locally)  
+   3a. [Create the classifier](#3a-create-the-classifier)  
+   3b. [Run the application](#3b-run-the-application)  
 4. [Deploy on IBM Cloud](#4-deploy-on-ibm-cloud)
 
 ## 1. Clone the repo
