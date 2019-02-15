@@ -102,13 +102,13 @@ curl -i --user "$USERNAME":"$PASSWORD" -F training_data=@$FILE -F training_metad
 }
 ```
 
-    and export that as an environment variable:
+and export that as an environment variable:
 
 ```bash
 export CLASSIFIER_ID=<my_classifier_id>
 ```
 
-    Now you can check the status for training your classifier:
+Now you can check the status for training your classifier:
 
 ```bash
 curl --user "$USERNAME":"$PASSWORD" "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers/$CLASSIFIER_ID"
