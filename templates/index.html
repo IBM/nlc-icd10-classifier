@@ -1,55 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+	<meta charset="utf-8">
+	<title>IBM Watson NLC ICD-10 Classifier</title>
 
-  <head>
-    <title>Python Flask Starter Application</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="static/stylesheets/style.css">
-  </head>
+	<head>
+		<!-- bootstrap -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	</head>
 
   <body>
-    <table>
-      <tr>
-        <td>
-          <h1>NLC Demo</h1>
-        </td>
-      </tr>
-      <tr>
-          <td>
-            <p>NLC info dump: </p>
-            <textarea rows="8" cols="110"> {{ classifier_info }} </textarea>
-            <br>
-          </td>
-        </tr>  
-      <tr>
-        <td>
-          <form action="/classifyhandler" method="post"> Text to classify: <input type="text" name="classifierinput"> <input type="submit" value="Submit"> </form>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p> Output from Watson NLC classifier: </p>
-          <textarea rows="17" cols="110"> {{ classifier_output }} </textarea>
-          <br>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p> ICD10 code: </p>
-          <textarea rows="2" cols="10"> {{ icd_code }} </textarea>
-          <br>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p> Output from ICD10 API: </p>
-          <textarea rows="8" cols="110"> {{ icd_output }} </textarea>
-          <br>
-        </td>
-      </tr>
-    </table>
+    <div class="container">
+      <h1>IBM Watson NLC ICD-10 Classifier</h1>
+
+      <div class="form-group">
+          <label for="info">NLC service info:</label>
+          <textarea class="form-control" rows="5" id="info"> {{ classifier_info }} </textarea>
+      </div>
+
+      <p>Now on to classifiying medical conditions, input some text into the box below and see the ICD-10 code:</p>
+
+      <form action="/classifyhandler" method="post">
+        <div class="form-group">
+          <label for="classifierinput">Text to classify:</label>
+          <input type="text" class="form-control" id="classifierinput">
+        </div>
+        <input type="submit" class="btn btn-info" value="Submit Button">
+      </form><br>
+
+      <div class="form-group">
+          <label for="classifier_output">Output from Watson NLC classifier:</label>
+          <textarea class="form-control" rows="5" id="classifier_output"> {{ classifier_output }} </textarea>
+          <label for="icd_code">ICD10 code:</label>
+          <textarea class="form-control" rows="5" id="icd_code"> {{ icd_code }} </textarea>
+          <label for="icd_output">Output from ICD10 API:</label>
+          <textarea class="form-control" rows="5" id="icd_output"> {{ icd_output }} </textarea>
+      </div>
+
   </body>
 
 </html>
