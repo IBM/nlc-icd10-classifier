@@ -3,7 +3,7 @@ applications:
   memory: 256M
   instances: 1
   domain: mybluemix.net
-  name: nlc-icd10
+  name: nlc-icd10-classifier
   disk_quota: 1024M
   buildpack: python_buildpack
   env:

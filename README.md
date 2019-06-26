@@ -89,9 +89,9 @@ The data used in this example is part of the ICD-10 data set and a cleaned versi
 
 * Add the data to your project by clicking the `Browse` button in the right-hand `Upload to project` section and browsing to the cloned repo. Choose the [`data/ICD-10-GT-AA.csv`](`data/Email-trainingdata-20k.csv`) file.
 
-* Drag and drop the `ICD-10-GT-AA.csv` file you uploaded to the `Create a Class` box:
+* Select the `ICD-10-GT-AA.csv` file you just uploaded and choose `Add to model`.
 
-  ![video-to-gif](https://raw.githubusercontent.com/IBM/pattern-utils/master/watson-studio/nlc-add-data-to-model.gif)
+  ![add-to-model](doc/source/images/nlc-add-to-model.png)
 
 * Click the `Train model` button to begin training. The model will take around an hour to train.
 
@@ -125,13 +125,13 @@ Follow the steps below for deploying the application:
 
 * From the *Toolchains* menu, click the *Delivery Pipeline* to watch while the app is deployed. Once deployed, the app can be viewed by clicking *View app*.
 
-* The app and service can be viewed in the [IBM Cloud dashboard](https://cloud.ibm.com/resources). The app will be named `nlc-icd10`, with a unique suffix.
+* The app and service can be viewed in the [IBM Cloud dashboard](https://cloud.ibm.com/resources). The app will be named `nlc-icd10-classifier`, with a unique suffix.
 
 * We now need to add a few environment variables to the application's runtime so the right classifier service and model are used. Click on the application from the dashboard to view its settings.
 
 * Once viewing the application, click the `Runtime` option on the menu and navigate to the `Environment Variables` section.
 
-* Update the `CLASSIFIER_ID`, `NATURAL_LANGUAGE_CLASSIFIER_USERNAME`, and `NATURAL_LANGUAGE_CLASSIFIER_PASSWORD` variables with your `Model ID` from [Step 4](#4-train-the-nlc-model)  and NLC service credentials from [Step 2](#2-create-ibm-cloud-services). Click `Save`.
+* Update the `CLASSIFIER_ID`, and `NATURAL_LANGUAGE_CLASSIFIER_IAM_APIKEY` variables with your `Model ID` from [Step 4](#4-train-the-nlc-model)  and NLC API key from [Step 2](#2-create-ibm-cloud-services). Click `Save`.
 
   ![env vars](doc/source/images/nlc-envvars.png)
 
@@ -170,7 +170,7 @@ The general recommendation for Python development is to use a virtual environmen
   ```bash
   # Replace the credentials here with your own using either USERNAME/PASSWORD or IAM_APIKEY
   # Comment out the unset environment variables
-  # Rename this file to .env before running welcome.py.
+  # Rename this file to .env before running app.py.
 
   # NATURAL_LANGUAGE_CLASSIFIER_USERNAME=<add_NLC_username>
   # NATURAL_LANGUAGE_CLASSIFIER_PASSWORD=<add_NLC_password>
@@ -187,7 +187,7 @@ The general recommendation for Python development is to use a virtual environmen
 * Start the app by running
 
   ```bash
-  python welcome.py
+  python app.py
   ```
 
 * Open a browser and point to [`localhost:5000`](http://localhost:5000).

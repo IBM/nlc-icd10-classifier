@@ -16,7 +16,7 @@ import requests
 
 from dotenv import load_dotenv
 from flask import Flask, render_template, request
-from watson_developer_cloud import NaturalLanguageClassifierV1
+from ibm_watson import NaturalLanguageClassifierV1
 
 app = Flask(__name__)
 
@@ -42,10 +42,13 @@ else:
 
 
 @app.route('/')
-def Welcome():
+def default():
+    classifier_info = "cannot detect classifier"
+    if NLC_SERVICE:
+        classifier_info = "classifier detected, using API: " + NLC_SERVICE.url
     return render_template(
         'index.html',
-        classifier_info="",
+        classifier_info=classifier_info,
         icd_code="",
         icd_output="",
         classifier_output="")
@@ -55,7 +58,8 @@ def Welcome():
 def classify_text():
     inputtext = request.form['classifierinput']
     classifier_info = NLC_SERVICE.get_classifier(classifier_id)
-    classifier_output = NLC_SERVICE.classify(classifier_id, inputtext).get_result()
+    classifier_output = NLC_SERVICE.classify(classifier_id,
+                                             inputtext).get_result()
     icd_code, icd_output = _get_ICD_code_info(classifier_output)
     classifier_output = json.dumps(classifier_output, indent=4)
     icd_output = json.dumps(icd_output, indent=4)
