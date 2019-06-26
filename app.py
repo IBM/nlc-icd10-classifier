@@ -18,6 +18,7 @@ from dotenv import load_dotenv
 from flask import Flask, render_template, request
 from ibm_watson import NaturalLanguageClassifierV1
 
+DEBUG = True
 app = Flask(__name__)
 
 load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))

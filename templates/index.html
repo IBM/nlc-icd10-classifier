@@ -12,32 +12,38 @@
 	</head>
 
   <body>
-    <div class="container">
-      <h1>IBM Watson NLC ICD-10 Classifier</h1>
-
-      <div class="form-group">
-          <label for="info">NLC service info:</label>
-          <textarea class="form-control" rows="5" id="info"> {{ classifier_info }} </textarea>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand">IBM Watson NLC Example</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">ICD-10 Classifier</a></li>
+          <li><a href="https://github.com/IBM/nlc-icd10-classifier/">GitHub repo</a></li>
+        </ul>
       </div>
+    </nav>
+
+    <div class="container">
+      <label for="info">NLC service info:</label>
+      <textarea class="form-control" rows="5" id="info"> {{ classifier_info }} </textarea>
 
       <p>Now on to classifiying medical conditions, input some text into the box below and see the ICD-10 code:</p>
 
-      <form action="/classifyhandler" method="post">
+      <form action="/classifyhandler" method="post" role="form">
         <div class="form-group">
           <label for="classifierinput">Text to classify:</label>
-          <input type="text" class="form-control" id="classifierinput">
-        </div>
-        <input type="submit" class="btn btn-info" value="Submit Button">
-      </form><br>
+          <input type="text" class="form-control" name="classifierinput" id="classifierinput" required>
+          <br><input type="submit" class="btn btn-info" value="Submit Button"><br><br>
 
-      <div class="form-group">
           <label for="classifier_output">Output from Watson NLC classifier:</label>
           <textarea class="form-control" rows="5" id="classifier_output"> {{ classifier_output }} </textarea>
           <label for="icd_code">ICD10 code:</label>
           <textarea class="form-control" rows="5" id="icd_code"> {{ icd_code }} </textarea>
           <label for="icd_output">Output from ICD10 API:</label>
           <textarea class="form-control" rows="5" id="icd_output"> {{ icd_output }} </textarea>
-      </div>
+        </div>
+      </form>
 
   </body>
 
