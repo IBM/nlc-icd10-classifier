@@ -16,25 +16,24 @@ import requests
 
 from dotenv import load_dotenv
 from flask import Flask, render_template, request
-from watson_developer_cloud import NaturalLanguageClassifierV1
+from ibm_watson import NaturalLanguageClassifierV1
 
+DEBUG = True
 app = Flask(__name__)
-
-# The data set we want to use
-DATA_SET = 'data/ICD-10-GT-AA.csv'
 
 load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 
 nlc_username = os.environ.get("NATURAL_LANGUAGE_CLASSIFIER_USERNAME")
 nlc_password = os.environ.get("NATURAL_LANGUAGE_CLASSIFIER_PASSWORD")
 nlc_iam_apikey = os.environ.get("NATURAL_LANGUAGE_CLASSIFIER_IAM_APIKEY")
+classifier_id = os.environ.get("CLASSIFIER_ID")
 
 # Use provided credentials from environment or pull from IBM Cloud VCAP
-if nlc_iam_apikey:
+if nlc_iam_apikey != "placeholder":
     NLC_SERVICE = NaturalLanguageClassifierV1(
       iam_apikey=nlc_iam_apikey
     )
-elif nlc_username:
+elif nlc_username != "placeholder":
     NLC_SERVICE = NaturalLanguageClassifierV1(
       username=nlc_username,
       password=nlc_password
@@ -42,16 +41,12 @@ elif nlc_username:
 else:
     NLC_SERVICE = NaturalLanguageClassifierV1()
 
-CLASSIFIER = None
-
 
 @app.route('/')
-def Welcome():
-    global CLASSIFIER
-    # create classifier if it doesn't exist, format the json
-    CLASSIFIER = _create_classifier()
-    classifier_info = json.dumps(CLASSIFIER, indent=4)
-    # update the UI, but only the classifier info box
+def default():
+    classifier_info = "cannot detect classifier"
+    if NLC_SERVICE:
+        classifier_info = "classifier detected, using API: " + NLC_SERVICE.url
     return render_template(
         'index.html',
         classifier_info=classifier_info,
@@ -62,43 +57,19 @@ def Welcome():
 
 @app.route('/classifyhandler', methods=['GET', 'POST'])
 def classify_text():
-    # get the text from the UI
     inputtext = request.form['classifierinput']
-    # get info about the classifier
-    classifier_info = json.dumps(CLASSIFIER, indent=4)
-    # send the text to the classifier, get back an ICD code
-    classifier_output = NLC_SERVICE.classify(
-        CLASSIFIER['classifier_id'], inputtext).get_result()
-    # get the ICD name based on ICD code
+    classifier_info = NLC_SERVICE.get_classifier(classifier_id)
+    classifier_output = NLC_SERVICE.classify(classifier_id,
+                                             inputtext).get_result()
     icd_code, icd_output = _get_ICD_code_info(classifier_output)
-    # format results
     classifier_output = json.dumps(classifier_output, indent=4)
     icd_output = json.dumps(icd_output, indent=4)
-    # fill in the text boxes
     return render_template(
         'index.html',
         classifier_info=classifier_info,
         icd_code=icd_code,
         icd_output=icd_output,
         classifier_output=classifier_output)
-
-
-def _create_classifier():
-    # fetch all classifiers associated with the NLC instance
-    result = NLC_SERVICE.list_classifiers().get_result()
-    # for the purposes of this demo, we handle only one classifier
-    # return the first one found
-    if len(result['classifiers']) > 0:
-        return result['classifiers'][0]
-    else:
-        # if none found, create a new classifier, change this value
-        with open(DATA_SET, 'rb') as training_data:
-            metadata = '{"name": "ICD_classifier", "language": "en"}'
-            classifier = NLC_SERVICE.create_classifier(
-                metadata=metadata,
-                training_data=training_data
-            ).get_result()
-        return classifier
 
 
 def _get_ICD_code_info(result):

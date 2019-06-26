@@ -1,7 +1,5 @@
 [![Build Status](https://travis-ci.org/IBM/nlc-icd10-classifier.svg?branch=master)](https://travis-ci.org/IBM/nlc-icd10-classifier)
 
-*Read this in other languages: [日本語](README-ja.md).*
-
 > **DISCLAIMER**: This application is used for demonstrative and illustrative purposes only and does not constitute an offering that has gone through regulatory review. It is not intended to serve as a medical application. There is no representation as to the accuracy of the output of this application and it is presented without warranty.
 
 # Classify medical diagnosis with ICD-10 code
@@ -17,232 +15,205 @@ When the reader has completed this pattern, they will understand how to:
 * Deploy a web app with Flask to allow the NLC model to be queried.
 * Quickly get a classification of a disease or health issue using the Natural Language Classifier trained model.
 
-![architecture](doc/source/images/architecture.png)
-
 ## Flow
 
+![architecture](doc/source/images/architecture.png)
+
 1. CSV files are sent to the Natural Language Classifier service to train the model.
-2. The user interacts with the web app UI running either locally or in the cloud.
-3. The application sends the user's input to the Natural Language Classifier model to be classified.
-4. The information containing the classification is returned to the web app.
+1. The user interacts with the web app UI running either locally or in the cloud.
+1. The application sends the user's input to the Natural Language Classifier model to be classified.
+1. The information containing the classification is returned to the web app.
 
 ## Included Components
 
+* [Watson Studio](https://www.ibm.com/cloud/watson-studio): Analyze data using RStudio, Jupyter, and Python in a configured, collaborative environment that includes IBM value-adds, such as managed Spark.
 * [Watson Natural Language Classifier](https://www.ibm.com/watson/services/natural-language-classifier/): An IBM Cloud service to interpret and classify natural language with confidence.
-
-## Featured Technologies
-
-* [Artificial Intelligence](https://medium.com/ibm-data-science-experience): Artificial intelligence can be applied to disparate solution spaces to deliver disruptive technologies.
-* [Cloud](https://developer.ibm.com/depmodels/cloud/): Accessing computer and information technology resources through the Internet.
 * [Python](https://www.python.org/): Python is a programming language that lets you work more quickly and integrate your systems more effectively.
 
-# Watch the Video
+## Watch the Video
 
 [![video](https://i.ytimg.com/vi/N0eKEZxdwsQ/hqdefault.jpg)](https://www.youtube.com/watch?v=N0eKEZxdwsQ)
 
-# Steps
+## Steps
 
 1. [Clone the repo](#1-clone-the-repo)
-2. [Create IBM Cloud services](#2-create-ibm-cloud-services)
+1. [Create IBM Cloud services](#2-create-ibm-cloud-services)
+1. [Create a Watson Studio project](#3-create-a-watson-studio-project)
+1. [Train the NLC model](#4-train-the-nlc-model)
+1. [Run the application](#5-run-the-application)
 
-Either [Run locally](#3-run-locally) or [Deploy on IBM Cloud](#4-deploy-on-ibm-cloud)
+### 1. Clone the repo
 
-3. [Run locally](#3-run-locally)  
-   3a. [Create the classifier](#3a-create-the-classifier)  
-   3b. [Run the application](#3b-run-the-application)  
-4. [Deploy on IBM Cloud](#4-deploy-on-ibm-cloud)
-
-## 1. Clone the repo
+Clone the `nlc-icd10-classifier` repo locally. In a terminal, run:
 
 ```bash
-git clone git@github.com:IBM/nlc-icd10-classifier.git
+git clone https://github.com/IBM/nlc-icd10-classifier
 cd nlc-icd10-classifier
 ```
 
-## 2. Create IBM Cloud services
+### 2. Create IBM Cloud services
 
 Create the following service:
 
-* [Natural Language Classifier](https://console.bluemix.net/catalog/services/natural-language-classifier)
+* [Natural Language Classifier](https://cloud.ibm.com/catalog/services/natural-language-classifier)
 
-> Note: The NLC service only offers a `Standard` plan, which allows:
-```
-1 Natural Language Classifier free per month.
-1000 API calls free per month
-4 Training Events free per month
-```
-> After that, there are charges for the use of the service when using a paid account.
+### 3. Create a Watson Studio project
 
+* Log into IBM's [Watson Studio](https://dataplatform.cloud.ibm.com). Once in, you'll land on the dashboard.
 
-## 3. Run locally
+* Create a new project by clicking `+ New project` and choosing `Data Science`:
 
-### 3a. Create the classifier
+  ![studio project](https://raw.githubusercontent.com/IBM/pattern-utils/master/watson-studio/new-project-data-science.png)
 
-* Export the username and password as environment variables and then load the data using the command below. If you have an API key, use `apikey` for the username and the API key for the password. This will take around 4.5 hours.
+* Enter a name for the project name and click `Create`.
 
-```bash
-export USERNAME=<username_from_credentials>
-export PASSWORD=<pasword_from_credentials>
-export FILE=data/ICD-10-GT-AA.csv
+* **NOTE**: By creating a project in Watson Studio a free tier `Object Storage` service and `Watson Machine Learning` service will be created in your IBM Cloud account. Select the `Free` storage type to avoid fees.
 
-curl -i --user "$USERNAME":"$PASSWORD" -F training_data=@$FILE -F training_metadata="{\"language\":\"en\",\"name\":\"ICD-10Classifier\"}" "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers"
-```
+  ![studio-new-project](https://raw.githubusercontent.com/IBM/pattern-utils/master/watson-studio/new-project-data-science-name.png)
 
-* After running the command to create the classifier, note the `classifier_id` in the json that is returned:
+* Upon a successful project creation, you are taken to a dashboard view of your project. Take note of the `Assets` and `Settings` tabs, we'll be using them to associate our project with any external assets (datasets and notebooks) and any IBM cloud services.
 
-```JSON
-{
-    "classifier_id" : "ab2aa6x341-nlc-1176",
-    "name" : "ICD-10Classifier",
-    "language" : "en",
-    "created" : "2018-04-18T14:09:28.403Z",
-    "url" : "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers/ab2aa6x341-nlc-1176",
-    "status" : "Training",
-    "status_description" : "The classifier instance is in its training phase, not yet ready to accept classify requests"
-}
-```
+  ![studio-project-dashboard](https://raw.githubusercontent.com/IBM/pattern-utils/master/watson-studio/overview-empty.png)
 
-and export that as an environment variable:
+### 4. Train the NLC model
 
-```bash
-export CLASSIFIER_ID=<my_classifier_id>
-```
+The data used in this example is part of the ICD-10 data set and a cleaned version we'll use is available in the repo under [data/ICD-10-GT-AA.csv](data/ICD-10-GT-AA.csv). We'll now train an NLC model using this data.
 
-Now you can check the status for training your classifier:
+* From the new project `Overview` panel, click `+ Add to project` on the top right and choose the `Natural Language Classifier` asset type.
 
-```bash
-curl --user "$USERNAME":"$PASSWORD" "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers/$CLASSIFIER_ID"
-```
+  ![add-nlc-asset](https://raw.githubusercontent.com/IBM/pattern-utils/master/watson-studio/add-assets-nlc.png)
 
-> Note that this is a subset of the entire ICD-10 classification set, which allows faster training time
+* A new instance of the NLC tool will launch.
 
-* When the instance is created you will see a screen where you can copy the service credentials. Copy the API key for later use.
+  ![new-nlc-model](https://raw.githubusercontent.com/IBM/pattern-utils/master/watson-studio/training-nlc-new.png)
 
-> NLC service instances created after 10/30/18 will have an API key, instances from before this date will provide userid / password credentials.
+* Add the data to your project by clicking the `Browse` button in the right-hand `Upload to project` section and browsing to the cloned repo. Choose the [`data/ICD-10-GT-AA.csv`](`data/Email-trainingdata-20k.csv`) file.
 
-![NLC service](doc/source/images/NLC-Service.png)
+* Select the `ICD-10-GT-AA.csv` file you just uploaded and choose `Add to model`.
 
-### 3b. Run the application
+  ![add-to-model](doc/source/images/nlc-add-to-model.png)
 
-* The general recommendation for Python development is to use a virtual environment [(venv)](https://docs.python.org/3/tutorial/venv.html). To install and initialize a virtual environment, use the `venv` module on Python 3 (you install the virtualenv library for Python 2.7):
+* Click the `Train model` button to begin training. The model will take around an hour to train.
 
+* To check the status of the model, and access it after it trains, go to your project in the `Assets` tab of the `Models` section. The model will show up when it is ready. Double click to see the `Overview` tab.
 
-Create the virtual environment using Python. Use one of the two commands depending on your Python version.
-> Note: it may be named python3 on your system.
+  ![nlc-model-overview](https://raw.githubusercontent.com/IBM/pattern-utils/master/watson-studio/nlc-model-overview.png)
 
-```bash
-python -m venv mytestenv       # Python 3.X
-virtualenv mytestenv           # Python 2.X
-```
+* The first line of the `Overview` tab contains the `Model ID`, remember this value as we'll need it in the next step.
 
-Now source the virtual environment. Use one of the two commands depending on your OS.
+### 5. Run the application
 
-```bash
-source mytestenv/bin/activate  # Mac or Linux
-./mytestenv/Scripts/activate   # Windows PowerShell
-```
-> **TIP** :bulb: To terminate the virtual environment use the `deactivate` command.
+Follow the steps below for deploying the application:
 
-* Go to the cloned repo directory:
+* [Run on IBM Cloud](#run-on-ibm-cloud)
 
-```bash
-cd nlc-icd10-classifier
-```
+  **OR**
 
-* Install the Python requirements for this code pattern:
+* [Run locally](#run-locally)
 
-```bash
-pip install -r requirements.txt
-```
+#### Run on IBM Cloud
 
+* Press the `Deploy to IBM Cloud` button below.
 
-* Rename the `env.example` file to `.env`
+<p align="center">
+    <a href="https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/IBM/nlc-icd10-classifier.git">
+    <img src="https://cloud.ibm.com/devops/setup/deploy/button_x2.png" alt="Deploy to IBM Cloud">
+    </a>
+</p>
 
-```bash
-mv env.example .env
-```
+* From the IBM Cloud deployment page click the `Deploy` button.
+
+* From the *Toolchains* menu, click the *Delivery Pipeline* to watch while the app is deployed. Once deployed, the app can be viewed by clicking *View app*.
+
+* The app and service can be viewed in the [IBM Cloud dashboard](https://cloud.ibm.com/resources). The app will be named `nlc-icd10-classifier`, with a unique suffix.
+
+* We now need to add a few environment variables to the application's runtime so the right classifier service and model are used. Click on the application from the dashboard to view its settings.
+
+* Once viewing the application, click the `Runtime` option on the menu and navigate to the `Environment Variables` section.
+
+* Update the `CLASSIFIER_ID`, and `NATURAL_LANGUAGE_CLASSIFIER_IAM_APIKEY` variables with your `Model ID` from [Step 4](#4-train-the-nlc-model)  and NLC API key from [Step 2](#2-create-ibm-cloud-services). Click `Save`.
+
+  ![env vars](doc/source/images/nlc-envvars.png)
+
+* After saving the environment variables, the app will restart. After the app restarts you can access it by clicking the *Visit App URL* button.
+
+#### Run locally
+
+The general recommendation for Python development is to use a virtual environment [(venv)](https://docs.python.org/3/tutorial/venv.html). To install and initialize a virtual environment, use the `venv` module on Python 3 (you install the virtualenv library for Python 2.7):
+
+* Create the virtual environment using Python. Use one of the two commands depending on your Python version.
+
+  > **Note**: it may be named python3 on your system.
+
+  ```bash
+  python -m venv mytestenv       # Python 3.X
+  virtualenv mytestenv           # Python 2.X
+  ```
+
+* Now source the virtual environment. Use one of the two commands depending on your OS.
+
+  ```bash
+  source mytestenv/bin/activate  # Mac or Linux
+  ./mytestenv/Scripts/activate   # Windows PowerShell
+  ```
+
+  > **TIP** :bulb: To terminate the virtual environment use the `deactivate` command.
+
+* Rename the [`env.example`](env.example) file to `.env`
+
+  ```bash
+  mv env.example .env
+  ```
 
 * Update the `.env` file  with the NLC credentials for either username/password or API key
 
-```bash
-# Replace the credentials here with your own using either USERNAME/PASSWORD or IAM_APIKEY
-# Comment out the unset environment variables
-# Rename this file to .env before running welcome.py.
+  ```bash
+  # Replace the credentials here with your own using either USERNAME/PASSWORD or IAM_APIKEY
+  # Comment out the unset environment variables
+  # Rename this file to .env before running app.py.
 
-#NATURAL_LANGUAGE_CLASSIFIER_USERNAME=<add_NLC_username>
-#NATURAL_LANGUAGE_CLASSIFIER_PASSWORD=<add_NLC_password>
+  # NATURAL_LANGUAGE_CLASSIFIER_USERNAME=<add_NLC_username>
+  # NATURAL_LANGUAGE_CLASSIFIER_PASSWORD=<add_NLC_password>
 
-NATURAL_LANGUAGE_CLASSIFIER_IAM_APIKEY=<add_NLC_iam_apikey>
-```
+  NATURAL_LANGUAGE_CLASSIFIER_IAM_APIKEY=<add_NLC_iam_apikey>
+  ```
 
-* Run the app
+* Install the app dependencies by running:
 
-```bash
-python welcome.py
-```
+  ```bash
+  pip install -r requirements.txt
+  ```
 
-* Access the running app in a browser at `http://localhost:5000`
+* Start the app by running
 
-## 4. Deploy on IBM Cloud
+  ```bash
+  python app.py
+  ```
 
->Note: If you've never run the `bluemix` command before there is some configuration required, refer to the official [IBM Cloud CLI](https://cloud.ibm.com/docs/cli/reference/bluemix_cli/get_started.html) docs to get this set up.
+* Open a browser and point to [`localhost:5000`](http://localhost:5000).
 
-* Update [`manifest.yml`](manifest.yml) with the NLC service name (`your_nlc_service_name`), a unique application name (`your_app_name`) and unique host value (`your_app_host`)
+## Sample Output
 
+The user inputs information into the *Text to classify:* text box and the Watson NLC classifier will return ICD10 classifications with confidence scores.
 
-```yaml
-applications:
-    - path: .
-    memory: 256M
-    instances: 1
-    domain: mybluemix.net
-    name: <your_app_name>
-    host: <your_app_host>
-    disk_quota: 1024M
-    services:
-    - <your_nlc_service_name>
-    buildpack: python_buildpack
-```
+> Classification of *Gastrointestinal hemorrhage*:
+> ![Sample output](doc/source/images/output.png)
 
-* After logging in to the IBM Cloud CLI, if you have a Natural Language Classifier as a resource group service (it will have an API key for the credential), create a Cloud Foundry service alias. Otherwise, skip to the next step.
+## Links
 
-```bash
-ibmcloud target --cf
-ibmcloud resource service-alias-create your_nlc_service_name --instance-name your_nlc_service_name
-```
-
-* Deploy the application as a Cloud Foundry runtime:
-
-```bash
-ibmcloud app push
-```
-
-* Access the running app by going to: `https://<host-value>.mybluemix.net/`
-
-# Sample Output
-
-The user inputs information into the `Text to classify:` box and the Watson NLC classifier will return ICD10 classifications with confidence scores.
-Here is the output for the input `Gastrointestinal hemorrhage`:
-
-![Sample output](doc/source/images/sampleOutput.png)
-
-# Links
 * [Watson NLC API](https://cloud.ibm.com/apidocs/natural-language-classifier)
 * [Watson Python SDK](https://github.com/watson-developer-cloud/python-sdk)
-* [IBM Cloud CLI](https://cloud.ibm.com/docs/cli/index.html#overview)
-* [Watson Natural Language Classifier](https://www.ibm.com/watson/services/natural-language-classifier/)
 * [Ryan Anderson's Original Work](https://github.com/rustyoldrake/IBM_Watson_NLC_ICD10_Health_Codes)
 * [ICD-10 API](http://icd10api.com)
 * [ICD-10 on Wikipedia](https://en.wikipedia.org/wiki/ICD-10)
 * [Intro to NLC Tutorial](https://www.youtube.com/watch?v=SUj826ybCdU)
 
-# Learn more
+## Learn more
 
 * **Artificial Intelligence Code Patterns**: Enjoyed this Code Pattern? Check out our other [AI Code Patterns](https://developer.ibm.com/technologies/artificial-intelligence/).
 * **AI and Data Code Pattern Playlist**: Bookmark our [playlist](https://www.youtube.com/playlist?list=PLzUbsvIyrNfknNewObx5N7uGZ5FKH0Fde) with all of our Code Pattern videos
-* **With Watson**: Want to take your Watson app to the next level? Looking to utilize Watson Brand assets? [Join the With Watson program](https://www.ibm.com/watson/with-watson/) to leverage exclusive brand, marketing, and tech resources to amplify and accelerate your Watson embedded commercial solution.
 
-# License
+## License
 
 This code pattern is licensed under the Apache Software License, Version 2.  Separate third party code objects invoked within this code pattern are licensed by their respective providers pursuant to their own separate licenses. Contributions are subject to the [Developer Certificate of Origin, Version 1.1 (DCO)](https://developercertificate.org/) and the [Apache Software License, Version 2](https://www.apache.org/licenses/LICENSE-2.0.txt).
 
