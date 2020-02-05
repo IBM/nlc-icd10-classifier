@@ -8,6 +8,4 @@ applications:
   buildpack: python_buildpack
   env:
     CLASSIFIER_ID: placeholder
-    NATURAL_LANGUAGE_CLASSIFIER_USERNAME: placeholder
-    NATURAL_LANGUAGE_CLASSIFIER_PASSWORD: placeholder
-    NATURAL_LANGUAGE_CLASSIFIER_IAM_APIKEY: placeholder
+    NLC_IAM_APIKEY: placeholder

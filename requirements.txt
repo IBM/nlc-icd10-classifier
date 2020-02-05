@@ -1,3 +1,4 @@
-python-dotenv
-Flask
-ibm-watson
+python-dotenv==0.10.5
+Flask==1.1.1
+ibm_cloud_sdk_core==1.5.1
+ibm-watson==4.2.1

@@ -16,6 +16,8 @@ import requests
 
 from dotenv import load_dotenv
 from flask import Flask, render_template, request
+
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from ibm_watson import NaturalLanguageClassifierV1
 
 DEBUG = True
@@ -23,30 +25,18 @@ app = Flask(__name__)
 
 load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 
-nlc_username = os.environ.get("NATURAL_LANGUAGE_CLASSIFIER_USERNAME")
-nlc_password = os.environ.get("NATURAL_LANGUAGE_CLASSIFIER_PASSWORD")
-nlc_iam_apikey = os.environ.get("NATURAL_LANGUAGE_CLASSIFIER_IAM_APIKEY")
+nlc_iam_apikey = os.environ.get("NLC_IAM_APIKEY")
 classifier_id = os.environ.get("CLASSIFIER_ID")
 
-# Use provided credentials from environment or pull from IBM Cloud VCAP
-if nlc_iam_apikey != "placeholder":
-    NLC_SERVICE = NaturalLanguageClassifierV1(
-      iam_apikey=nlc_iam_apikey
-    )
-elif nlc_username != "placeholder":
-    NLC_SERVICE = NaturalLanguageClassifierV1(
-      username=nlc_username,
-      password=nlc_password
-    )
-else:
-    NLC_SERVICE = NaturalLanguageClassifierV1()
+authenticator = IAMAuthenticator(nlc_iam_apikey)
+NLC_SERVICE = NaturalLanguageClassifierV1(authenticator=authenticator)
 
 
 @app.route('/')
 def default():
     classifier_info = "cannot detect classifier"
     if NLC_SERVICE:
-        classifier_info = "classifier detected, using API: " + NLC_SERVICE.url
+        classifier_info = "classifier detected, using API: " + NLC_SERVICE.service_url
     return render_template(
         'index.html',
         classifier_info=classifier_info,
@@ -58,12 +48,21 @@ def default():
 @app.route('/classifyhandler', methods=['GET', 'POST'])
 def classify_text():
     inputtext = request.form['classifierinput']
-    classifier_info = NLC_SERVICE.get_classifier(classifier_id)
-    classifier_output = NLC_SERVICE.classify(classifier_id,
-                                             inputtext).get_result()
-    icd_code, icd_output = _get_ICD_code_info(classifier_output)
-    classifier_output = json.dumps(classifier_output, indent=4)
-    icd_output = json.dumps(icd_output, indent=4)
+
+    try:
+        classifier_info = NLC_SERVICE.get_classifier(classifier_id)
+        classifier_output = NLC_SERVICE.classify(classifier_id,
+                                                 inputtext).get_result()
+        icd_code, icd_output = _get_ICD_code_info(classifier_output)
+        classifier_output = json.dumps(classifier_output, indent=4)
+        icd_output = json.dumps(icd_output, indent=4)
+    except Exception:
+        classifier_info = ("error from classifier service, "
+                             "check if credentials are set")
+        classifier_output = ""
+        icd_code = ""
+        icd_output = ""
+
     return render_template(
         'index.html',
         classifier_info=classifier_info,
