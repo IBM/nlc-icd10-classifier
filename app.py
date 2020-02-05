@@ -36,7 +36,8 @@ NLC_SERVICE = NaturalLanguageClassifierV1(authenticator=authenticator)
 def default():
     classifier_info = "cannot detect classifier"
     if NLC_SERVICE:
-        classifier_info = "classifier detected, using API: " + NLC_SERVICE.service_url
+        classifier_info = ("classifier detected, using API: " +
+                           NLC_SERVICE.service_url)
     return render_template(
         'index.html',
         classifier_info=classifier_info,
@@ -58,7 +59,7 @@ def classify_text():
         icd_output = json.dumps(icd_output, indent=4)
     except Exception:
         classifier_info = ("error from classifier service, "
-                             "check if credentials are set")
+                           "check if credentials are set")
         classifier_output = ""
         icd_code = ""
         icd_output = ""
