@@ -17,18 +17,17 @@ import requests
 from dotenv import load_dotenv
 from flask import Flask, render_template, request
 
-from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+from ibm_cloud_sdk_core import get_authenticator_from_environment
 from ibm_watson import NaturalLanguageClassifierV1
 
 DEBUG = True
 app = Flask(__name__)
 
 load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
-
-nlc_iam_apikey = os.environ.get("NLC_IAM_APIKEY")
 classifier_id = os.environ.get("CLASSIFIER_ID")
 
-authenticator = IAMAuthenticator(nlc_iam_apikey)
+NLC_SERVICE_NAME = 'natural_language_classifier'
+authenticator = get_authenticator_from_environment(NLC_SERVICE_NAME)
 NLC_SERVICE = NaturalLanguageClassifierV1(authenticator=authenticator)
 
 
