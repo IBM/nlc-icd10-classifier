@@ -17,7 +17,6 @@ import requests
 from dotenv import load_dotenv
 from flask import Flask, render_template, request
 
-from ibm_cloud_sdk_core import get_authenticator_from_environment
 from ibm_watson import NaturalLanguageClassifierV1
 
 DEBUG = True
@@ -26,9 +25,7 @@ app = Flask(__name__)
 load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 classifier_id = os.environ.get("CLASSIFIER_ID")
 
-NLC_SERVICE_NAME = 'natural_language_classifier'
-authenticator = get_authenticator_from_environment(NLC_SERVICE_NAME)
-NLC_SERVICE = NaturalLanguageClassifierV1(authenticator=authenticator)
+NLC_SERVICE = NaturalLanguageClassifierV1()
 
 
 @app.route('/')
