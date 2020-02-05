@@ -131,7 +131,7 @@ Follow the steps below for deploying the application:
 
 * Once viewing the application, click the `Runtime` option on the menu and navigate to the `Environment Variables` section.
 
-* Update the `CLASSIFIER_ID`, and `NATURAL_LANGUAGE_CLASSIFIER_IAM_APIKEY` variables with your `Model ID` from [Step 4](#4-train-the-nlc-model)  and NLC API key from [Step 2](#2-create-ibm-cloud-services). Click `Save`.
+* Update the `CLASSIFIER_ID`, and `NATURAL_LANGUAGE_CLASSIFIER_APIKEY` variables with your `Model ID` from [Step 4](#4-train-the-nlc-model)  and NLC API key from [Step 2](#2-create-ibm-cloud-services). Click `Save`.
 
   ![env vars](doc/source/images/nlc-envvars.png)
 
@@ -172,10 +172,8 @@ The general recommendation for Python development is to use a virtual environmen
   # Comment out the unset environment variables
   # Rename this file to .env before running app.py.
 
-  # NATURAL_LANGUAGE_CLASSIFIER_USERNAME=<add_NLC_username>
-  # NATURAL_LANGUAGE_CLASSIFIER_PASSWORD=<add_NLC_password>
-
-  NATURAL_LANGUAGE_CLASSIFIER_IAM_APIKEY=<add_NLC_iam_apikey>
+  CLASSIFIER_ID=<add_nlc_classifier_id>
+  NATURAL_LANGUAGE_CLASSIFIER_APIKEY=<add_nlc_apikey>
   ```
 
 * Install the app dependencies by running:
