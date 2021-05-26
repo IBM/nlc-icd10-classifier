@@ -11,7 +11,7 @@ Instead of using Watson Studio, the NLC model can be created by calling the API 
    export PASSWORD=<pasword_from_credentials>
    export FILE=data/ICD-10-GT-AA.csv
 
-   curl -i --user "$USERNAME":"$PASSWORD" -F training_data=@$FILE -F training_metadata="{\"language\":\"en\",\"name\":\"ICD-10Classifier\"}" "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers"
+   curl -i --user "$USERNAME":"$PASSWORD" -F training_data=@$FILE -F training_metadata="{\"language\":\"en\",\"name\":\"ICD-10Classifier\"}" "https://api.us-south.natural-language-classifier.watson.cloud.ibm.com/v1/classifiers"
    ```
 
 2. After running the command to create the classifier, note the `classifier_id` in the json that is returned:
